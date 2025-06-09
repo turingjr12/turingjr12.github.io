@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToxiShare - Plateforme de Mutualisation des Tests de Toxicité</title>
+    <title>Alex Martin - Développeur Full Stack</title>
     <style>
         * {
             margin: 0;
@@ -11,239 +11,442 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --white: #ffffff;
         }
 
-        .container {
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 0 2rem;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            list-style: none;
         }
 
         .nav-links a {
+            color: var(--text);
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
         }
 
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
         .hero {
-            padding: 120px 0 80px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            color: white;
+            position: relative;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
+            font-weight: 800;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--white), var(--text));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            color: var(--text-muted);
             margin-bottom: 2rem;
-            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
-        .btn {
+        .cta-button {
             display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
-        }
-
-        .features {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .dashboard {
-            padding: 80px 0;
-            background: #f8f9fa;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .sidebar {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-        }
-
-        .main-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .project-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            border-left: 4px solid #667eea;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
 
         .section-title {
             font-size: 2.5rem;
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 1rem;
-            color: #333;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--white), var(--text));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .section-subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .stats {
+        /* About Section */
+        .about-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .stat-card {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 1.5rem;
+        .about-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: var(--dark-light);
+            padding: 1rem;
             border-radius: 10px;
             text-align: center;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            display: block;
+        .skill-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
         }
 
-        .hidden {
-            display: none;
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
         }
 
-        .active {
-            background: #667eea;
-            color: white;
+        .project-card {
+            background: var(--dark-light);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
         }
 
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--white);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--white);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--dark-light);
+            margin: 0 -2rem;
+            padding: 6rem 2rem;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group.full {
+            grid-template-columns: 1fr;
+        }
+
+        input, textarea {
+            background: var(--dark);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--dark-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -253,301 +456,273 @@
                 font-size: 2.5rem;
             }
 
-            .dashboard-grid {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">ToxiShare</div>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">AM</div>
             <ul class="nav-links">
-                <li><a href="#" onclick="showSection('home')">Accueil</a></li>
-                <li><a href="#" onclick="showSection('dashboard')">Tableau de Bord</a></li>
-                <li><a href="#" onclick="showSection('projects')">Projets</a></li>
-                <li><a href="#" onclick="showSection('labs')">Laboratoires</a></li>
-                <li><a href="#" onclick="showSection('profile')">Profil</a></li>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <section id="home" class="section">
-        <div class="hero">
-            <div class="container">
-                <h1>ToxiShare</h1>
-                <p>Mutualisez vos ressources pour les tests de toxicité</p>
-                <a href="#" class="btn" onclick="showSection('dashboard')">Commencer Maintenant</a>
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <h1>Alex Martin</h1>
+            <div class="subtitle">Développeur Full Stack</div>
+            <p>Je crée des expériences web modernes et performantes avec une passion pour le code propre et l'innovation technologique.</p>
+            <a href="#projets" class="cta-button">Voir mes projets</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="fade-in">
+        <h2 class="section-title">À propos de moi</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Passionné par le développement web depuis plus de 5 ans, je me spécialise dans la création d'applications modernes et performantes. Mon approche combine créativité et rigueur technique pour livrer des solutions innovantes.</p>
+                <p>J'aime explorer les nouvelles technologies et participer à des projets qui repoussent les limites du possible. Mon objectif est de créer des expériences utilisateur exceptionnelles tout en maintenant un code de qualité.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">React</div>
+                <div class="skill-item">Vue.js</div>
+                <div class="skill-item">Node.js</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">PostgreSQL</div>
+                <div class="skill-item">MongoDB</div>
+                <div class="skill-item">Docker</div>
+                <div class="skill-item">AWS</div>
+                <div class="skill-item">Git</div>
             </div>
         </div>
+    </section>
 
-        <div class="features">
-            <div class="container">
-                <h2 class="section-title">Comment ça marche</h2>
-                <p class="section-subtitle">Une plateforme collaborative pour optimiser vos tests de toxicité</p>
-                
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔬</div>
-                        <h3>Partagez les Coûts</h3>
-                        <p>Réduisez vos frais de laboratoire en mutualisant les tests avec d'autres inventeurs.</p>
+    <!-- Projects Section -->
+    <section id="projets" class="fade-in">
+        <h2 class="section-title">Mes Projets</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">🚀</div>
+                <div class="project-content">
+                    <h3 class="project-title">E-Commerce Platform</h3>
+                    <p class="project-description">Plateforme e-commerce complète avec gestion des paiements, inventaire et tableau de bord administrateur.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Stripe</span>
+                        <span class="tag">MongoDB</span>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🤝</div>
-                        <h3>Collaborez</h3>
-                        <p>Trouvez des partenaires pour grouper vos commandes et négocier de meilleurs tarifs.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Voir le code</a>
+                        <a href="#" class="project-link">Demo live</a>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Suivez vos Projets</h3>
-                        <p>Gérez tous vos tests de toxicité depuis un tableau de bord centralisé.</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">📱</div>
+                <div class="project-content">
+                    <h3 class="project-title">Task Management App</h3>
+                    <p class="project-description">Application de gestion de tâches collaborative avec notifications en temps réel et synchronisation multi-appareils.</p>
+                    <div class="project-tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Express</span>
+                        <span class="tag">Socket.io</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Voir le code</a>
+                        <a href="#" class="project-link">Demo live</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">🎨</div>
+                <div class="project-content">
+                    <h3 class="project-title">Design System</h3>
+                    <p class="project-description">Système de design complet avec composants réutilisables, documentation interactive et thèmes personnalisables.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Storybook</span>
+                        <span class="tag">Styled Components</span>
+                        <span class="tag">TypeScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Voir le code</a>
+                        <a href="#" class="project-link">Demo live</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="dashboard" class="section dashboard hidden">
-        <div class="container">
-            <h2 class="section-title">Tableau de Bord</h2>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content fade-in">
+            <h2 class="section-title">Travaillons ensemble</h2>
+            <p>Vous avez un projet en tête ? N'hésitez pas à me contacter pour en discuter !</p>
             
-            <div class="stats">
-                <div class="stat-card">
-                    <span class="stat-number">24</span>
-                    <span>Projets Actifs</span>
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Votre nom" required>
+                    <input type="email" placeholder="Votre email" required>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number">12</span>
-                    <span>Partenaires</span>
+                <div class="form-group full">
+                    <input type="text" placeholder="Sujet" required>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number">€2,450</span>
-                    <span>Économies Réalisées</span>
+                <div class="form-group full">
+                    <textarea placeholder="Votre message" required></textarea>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number">8</span>
-                    <span>Tests Complétés</span>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="sidebar">
-                    <h3>Actions Rapides</h3>
-                    <div style="margin-top: 1rem;">
-                        <button class="btn" style="width: 100%; margin-bottom: 1rem;" onclick="showSection('projects')">
-                            Nouveau Projet
-                        </button>
-                        <button class="btn" style="width: 100%; margin-bottom: 1rem; background: linear-gradient(45deg, #28a745, #20c997);">
-                            Rejoindre un Groupe
-                        </button>
-                        <button class="btn" style="width: 100%; background: linear-gradient(45deg, #ffc107, #fd7e14);">
-                            Trouver un Laboratoire
-                        </button>
-                    </div>
-                </div>
-
-                <div class="main-content">
-                    <h3>Projets Récents</h3>
-                    <div class="project-card">
-                        <h4>Test de Cytotoxicité - Cosmétique Bio</h4>
-                        <p><strong>Statut:</strong> En cours | <strong>Partenaires:</strong> 3 | <strong>Économie:</strong> 35%</p>
-                        <p>Test de toxicité cellulaire pour une nouvelle gamme de cosmétiques biologiques.</p>
-                    </div>
-                    <div class="project-card">
-                        <h4>Analyse Dermique - Textile Innovant</h4>
-                        <p><strong>Statut:</strong> Planifié | <strong>Partenaires:</strong> 2 | <strong>Économie:</strong> 28%</p>
-                        <p>Évaluation de la biocompatibilité d'un nouveau textile intelligent.</p>
-                    </div>
-                    <div class="project-card">
-                        <h4>Test d'Irritation - Emballage Alimentaire</h4>
-                        <p><strong>Statut:</strong> Terminé | <strong>Partenaires:</strong> 4 | <strong>Économie:</strong> 42%</p>
-                        <p>Validation de la sécurité d'un emballage alimentaire biodégradable.</p>
-                    </div>
-                </div>
-            </div>
+                <button type="submit" class="submit-btn">Envoyer le message</button>
+            </form>
         </div>
     </section>
 
-    <section id="projects" class="section dashboard hidden">
-        <div class="container">
-            <h2 class="section-title">Créer un Nouveau Projet</h2>
-            
-            <div class="main-content" style="max-width: 800px; margin: 0 auto;">
-                <form id="projectForm">
-                    <div class="form-group">
-                        <label for="projectName">Nom du Projet</label>
-                        <input type="text" id="projectName" name="projectName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productType">Type de Produit</label>
-                        <select id="productType" name="productType" required>
-                            <option value="">Sélectionnez...</option>
-                            <option value="cosmetic">Cosmétique</option>
-                            <option value="medical">Dispositif Médical</option>
-                            <option value="food">Alimentaire</option>
-                            <option value="textile">Textile</option>
-                            <option value="chemical">Chimique</option>
-                            <option value="other">Autre</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="testType">Type de Test Requis</label>
-                        <select id="testType" name="testType" required>
-                            <option value="">Sélectionnez...</option>
-                            <option value="cytotoxicity">Cytotoxicité</option>
-                            <option value="skin-irritation">Irritation cutanée</option>
-                            <option value="eye-irritation">Irritation oculaire</option>
-                            <option value="sensitization">Sensibilisation</option>
-                            <option value="genotoxicity">Génotoxicité</option>
-                            <option value="systemic-toxicity">Toxicité systémique</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="budget">Budget Disponible (€)</label>
-                        <input type="number" id="budget" name="budget" min="100" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="timeline">Délai Souhaité</label>
-                        <select id="timeline" name="timeline" required>
-                            <option value="">Sélectionnez...</option>
-                            <option value="urgent">Urgent (< 2 semaines)</option>
-                            <option value="normal">Normal (2-4 semaines)</option>
-                            <option value="flexible">Flexible (> 1 mois)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description">Description du Projet</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Décrivez votre produit et les objectifs du test..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="openToPartners" name="openToPartners" checked>
-                            Ouvert à la collaboration avec d'autres inventeurs
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="btn" style="width: 100%;">Créer le Projet</button>
-                </form>
-            </div>
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#" class="social-link">📧</a>
+            <a href="#" class="social-link">💼</a>
+            <a href="#" class="social-link">🐙</a>
+            <a href="#" class="social-link">🐦</a>
         </div>
-    </section>
-
-    <section id="labs" class="section dashboard hidden">
-        <div class="container">
-            <h2 class="section-title">Laboratoires Partenaires</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>BioTest Labs</h3>
-                    <p><strong>Spécialités:</strong> Cytotoxicité, Irritation cutanée</p>
-                    <p><strong>Localisation:</strong> Paris, France</p>
-                    <p><strong>Tarif groupe:</strong> -25% à partir de 3 projets</p>
-                    <p><strong>Délai:</strong> 2-3 semaines</p>
-                    <button class="btn" style="margin-top: 1rem;">Contacter</button>
-                </div>
-                
-                <div class="feature-card">
-                    <h3>SafetyFirst Research</h3>
-                    <p><strong>Spécialités:</strong> Génotoxicité, Toxicité systémique</p>
-                    <p><strong>Localisation:</strong> Lyon, France</p>
-                    <p><strong>Tarif groupe:</strong> -30% à partir de 5 projets</p>
-                    <p><strong>Délai:</strong> 3-4 semaines</p>
-                    <button class="btn" style="margin-top: 1rem;">Contacter</button>
-                </div>
-                
-                <div class="feature-card">
-                    <h3>EcoTox Solutions</h3>
-                    <p><strong>Spécialités:</strong> Tests alternatifs, Sensibilisation</p>
-                    <p><strong>Localisation:</strong> Toulouse, France</p>
-                    <p><strong>Tarif groupe:</strong> -20% à partir de 2 projets</p>
-                    <p><strong>Délai:</strong> 1-2 semaines</p>
-                    <button class="btn" style="margin-top: 1rem;">Contacter</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="profile" class="section dashboard hidden">
-        <div class="container">
-            <h2 class="section-title">Mon Profil</h2>
-            
-            <div class="main-content" style="max-width: 600px; margin: 0 auto;">
-                <div class="form-group">
-                    <label for="companyName">Nom de l'Entreprise</label>
-                    <input type="text" id="companyName" value="InnovateTech Solutions" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="contactName">Nom du Contact</label>
-                    <input type="text" id="contactName" value="Marie Dubois" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" value="marie.dubois@innovatetech.fr" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Téléphone</label>
-                    <input type="tel" id="phone" value="+33 1 23 45 67 89" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="sector">Secteur d'Activité</label>
-                    <select id="sector">
-                        <option value="cosmetic" selected>Cosmétique</option>
-                        <option value="medical">Dispositifs Médicaux</option>
-                        <option value="food">Alimentaire</option>
-                        <option value="textile">Textile</option>
-                        <option value="chemical">Chimique</option>
-                    </select>
-                </div>
-                
-                <button class="btn" style="width: 100%; margin-top: 1rem;">Modifier le Profil</button>
-            </div>
-        </div>
-    </section>
+        <p>&copy; 2025 Alex Martin. Tous droits réservés.</p>
+    </footer>
 
     <script>
-        function showSection(sectionId) {
-            // Masquer toutes les sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.add('hidden');
-            });
-            
-            // Afficher la section demandée
-            document.getElementById(sectionId).classList.remove('hidden');
-            
-            // Mettre à jour la navigation
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-        }
-
-        // Gestion du formulaire de projet
-        document.getElementById('projectForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const projectData = Object.fromEntries(formData);
-            
-            alert('Projet créé avec succès ! Vous recevrez bientôt des propositions de partenaires et de laboratoires.');
-            
-            // Retour au tableau de bord
-            showSection('dashboard');
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
-        // Afficher la section d'accueil par défaut
-        showSection('home');
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '-50px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = 'Message envoyé !';
+                submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            
+            if (hero) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Dynamic typing effect for subtitle
+        const subtitle = document.querySelector('.hero .subtitle');
+        const texts = ['Développeur Full Stack', 'Créateur d\'expériences', 'Passionné de code'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeWriter() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                subtitle.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                subtitle.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
+        }
+
+        // Start typing effect after page load
+        setTimeout(typeWriter, 2000);
     </script>
 </body>
 </html>

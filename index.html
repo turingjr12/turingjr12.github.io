@@ -3,99 +3,551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Web Moderne</title>
+    <title>ToxiShare - Plateforme de Mutualisation des Tests de Toxicité</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa; /* Gris très clair */
-            color: #343a40; /* Gris foncé */
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
 
-        .header {
-            background-color: #007bff; /* Bleu principal */
-            color: white;
-            padding: 20px 0;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .hero {
+            padding: 120px 0 80px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .nav {
-            background-color: #343a40; /* Gris foncé pour la navigation */
             color: white;
-            padding: 10px 0;
-            text-align: center;
         }
 
-        .nav a {
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            display: inline-block;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
         }
 
-        .nav a:hover {
-            background-color: #495057; /* Un peu plus clair au survol */
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .dashboard {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
         }
 
         .main-content {
-            padding: 40px;
-            background-color: white;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin: 20px auto;
-            max-width: 800px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
-        .footer {
-            background-color: #343a40;
-            color: white;
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
+            margin-bottom: 1rem;
+            color: #333;
         }
 
-        .button {
-            background-color: #28a745; /* Vert pour les boutons */
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
         }
 
-        .button:hover {
-            background-color: #218838; /* Vert plus foncé au survol */
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <nav class="container">
+            <div class="logo">ToxiShare</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Accueil</a></li>
+                <li><a href="#" onclick="showSection('dashboard')">Tableau de Bord</a></li>
+                <li><a href="#" onclick="showSection('projects')">Projets</a></li>
+                <li><a href="#" onclick="showSection('labs')">Laboratoires</a></li>
+                <li><a href="#" onclick="showSection('profile')">Profil</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="header">
-        <h1>Mon Site Web Moderne</h1>
-        <p>Un exemple de design épuré et professionnel</p>
-    </div>
+    <section id="home" class="section">
+        <div class="hero">
+            <div class="container">
+                <h1>ToxiShare</h1>
+                <p>Mutualisez vos ressources pour les tests de toxicité</p>
+                <a href="#" class="btn" onclick="showSection('dashboard')">Commencer Maintenant</a>
+            </div>
+        </div>
 
-    <nav class="nav">
-        <a href="#">Accueil</a>
-        <a href="#">À propos</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-    </nav>
+        <div class="features">
+            <div class="container">
+                <h2 class="section-title">Comment ça marche</h2>
+                <p class="section-subtitle">Une plateforme collaborative pour optimiser vos tests de toxicité</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔬</div>
+                        <h3>Partagez les Coûts</h3>
+                        <p>Réduisez vos frais de laboratoire en mutualisant les tests avec d'autres inventeurs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Collaborez</h3>
+                        <p>Trouvez des partenaires pour grouper vos commandes et négocier de meilleurs tarifs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Suivez vos Projets</h3>
+                        <p>Gérez tous vos tests de toxicité depuis un tableau de bord centralisé.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="main-content">
-        <h2>Bienvenue</h2>
-        <p>Ceci est le contenu principal de votre page. Vous pouvez ajouter du texte, des images et d'autres éléments ici.</p>
-        <a href="#" class="button">En savoir plus</a>
-    </div>
+    <section id="dashboard" class="section dashboard hidden">
+        <div class="container">
+            <h2 class="section-title">Tableau de Bord</h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">24</span>
+                    <span>Projets Actifs</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">12</span>
+                    <span>Partenaires</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">€2,450</span>
+                    <span>Économies Réalisées</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">8</span>
+                    <span>Tests Complétés</span>
+                </div>
+            </div>
 
-    <div class="footer">
-        <p>&copy; 2025 Mon Site Web. Tous droits réservés.</p>
-    </div>
+            <div class="dashboard-grid">
+                <div class="sidebar">
+                    <h3>Actions Rapides</h3>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn" style="width: 100%; margin-bottom: 1rem;" onclick="showSection('projects')">
+                            Nouveau Projet
+                        </button>
+                        <button class="btn" style="width: 100%; margin-bottom: 1rem; background: linear-gradient(45deg, #28a745, #20c997);">
+                            Rejoindre un Groupe
+                        </button>
+                        <button class="btn" style="width: 100%; background: linear-gradient(45deg, #ffc107, #fd7e14);">
+                            Trouver un Laboratoire
+                        </button>
+                    </div>
+                </div>
 
+                <div class="main-content">
+                    <h3>Projets Récents</h3>
+                    <div class="project-card">
+                        <h4>Test de Cytotoxicité - Cosmétique Bio</h4>
+                        <p><strong>Statut:</strong> En cours | <strong>Partenaires:</strong> 3 | <strong>Économie:</strong> 35%</p>
+                        <p>Test de toxicité cellulaire pour une nouvelle gamme de cosmétiques biologiques.</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Analyse Dermique - Textile Innovant</h4>
+                        <p><strong>Statut:</strong> Planifié | <strong>Partenaires:</strong> 2 | <strong>Économie:</strong> 28%</p>
+                        <p>Évaluation de la biocompatibilité d'un nouveau textile intelligent.</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Test d'Irritation - Emballage Alimentaire</h4>
+                        <p><strong>Statut:</strong> Terminé | <strong>Partenaires:</strong> 4 | <strong>Économie:</strong> 42%</p>
+                        <p>Validation de la sécurité d'un emballage alimentaire biodégradable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section dashboard hidden">
+        <div class="container">
+            <h2 class="section-title">Créer un Nouveau Projet</h2>
+            
+            <div class="main-content" style="max-width: 800px; margin: 0 auto;">
+                <form id="projectForm">
+                    <div class="form-group">
+                        <label for="projectName">Nom du Projet</label>
+                        <input type="text" id="projectName" name="projectName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productType">Type de Produit</label>
+                        <select id="productType" name="productType" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="cosmetic">Cosmétique</option>
+                            <option value="medical">Dispositif Médical</option>
+                            <option value="food">Alimentaire</option>
+                            <option value="textile">Textile</option>
+                            <option value="chemical">Chimique</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testType">Type de Test Requis</label>
+                        <select id="testType" name="testType" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="cytotoxicity">Cytotoxicité</option>
+                            <option value="skin-irritation">Irritation cutanée</option>
+                            <option value="eye-irritation">Irritation oculaire</option>
+                            <option value="sensitization">Sensibilisation</option>
+                            <option value="genotoxicity">Génotoxicité</option>
+                            <option value="systemic-toxicity">Toxicité systémique</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="budget">Budget Disponible (€)</label>
+                        <input type="number" id="budget" name="budget" min="100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timeline">Délai Souhaité</label>
+                        <select id="timeline" name="timeline" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="urgent">Urgent (< 2 semaines)</option>
+                            <option value="normal">Normal (2-4 semaines)</option>
+                            <option value="flexible">Flexible (> 1 mois)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description du Projet</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Décrivez votre produit et les objectifs du test..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="openToPartners" name="openToPartners" checked>
+                            Ouvert à la collaboration avec d'autres inventeurs
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Créer le Projet</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="labs" class="section dashboard hidden">
+        <div class="container">
+            <h2 class="section-title">Laboratoires Partenaires</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>BioTest Labs</h3>
+                    <p><strong>Spécialités:</strong> Cytotoxicité, Irritation cutanée</p>
+                    <p><strong>Localisation:</strong> Paris, France</p>
+                    <p><strong>Tarif groupe:</strong> -25% à partir de 3 projets</p>
+                    <p><strong>Délai:</strong> 2-3 semaines</p>
+                    <button class="btn" style="margin-top: 1rem;">Contacter</button>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>SafetyFirst Research</h3>
+                    <p><strong>Spécialités:</strong> Génotoxicité, Toxicité systémique</p>
+                    <p><strong>Localisation:</strong> Lyon, France</p>
+                    <p><strong>Tarif groupe:</strong> -30% à partir de 5 projets</p>
+                    <p><strong>Délai:</strong> 3-4 semaines</p>
+                    <button class="btn" style="margin-top: 1rem;">Contacter</button>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>EcoTox Solutions</h3>
+                    <p><strong>Spécialités:</strong> Tests alternatifs, Sensibilisation</p>
+                    <p><strong>Localisation:</strong> Toulouse, France</p>
+                    <p><strong>Tarif groupe:</strong> -20% à partir de 2 projets</p>
+                    <p><strong>Délai:</strong> 1-2 semaines</p>
+                    <button class="btn" style="margin-top: 1rem;">Contacter</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="profile" class="section dashboard hidden">
+        <div class="container">
+            <h2 class="section-title">Mon Profil</h2>
+            
+            <div class="main-content" style="max-width: 600px; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="companyName">Nom de l'Entreprise</label>
+                    <input type="text" id="companyName" value="InnovateTech Solutions" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactName">Nom du Contact</label>
+                    <input type="text" id="contactName" value="Marie Dubois" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" value="marie.dubois@innovatetech.fr" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" value="+33 1 23 45 67 89" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sector">Secteur d'Activité</label>
+                    <select id="sector">
+                        <option value="cosmetic" selected>Cosmétique</option>
+                        <option value="medical">Dispositifs Médicaux</option>
+                        <option value="food">Alimentaire</option>
+                        <option value="textile">Textile</option>
+                        <option value="chemical">Chimique</option>
+                    </select>
+                </div>
+                
+                <button class="btn" style="width: 100%; margin-top: 1rem;">Modifier le Profil</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Afficher la section demandée
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Mettre à jour la navigation
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+        }
+
+        // Gestion du formulaire de projet
+        document.getElementById('projectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const projectData = Object.fromEntries(formData);
+            
+            alert('Projet créé avec succès ! Vous recevrez bientôt des propositions de partenaires et de laboratoires.');
+            
+            // Retour au tableau de bord
+            showSection('dashboard');
+        });
+
+        // Afficher la section d'accueil par défaut
+        showSection('home');
+    </script>
 </body>
 </html>
